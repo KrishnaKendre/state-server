@@ -5,3 +5,4 @@ start:
 
 server:
         ./state-server.sh &
+        
