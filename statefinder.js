@@ -20,11 +20,9 @@ function pointInState(point, state) {
         var j = state.length - 1;
         
         for (i, j; i < state.length; j = i++) {
-            if ( (state[i][1] > point.latitude) 
-                != (state[j][1] > point.latitude) && point.longitude < (state[j][0] - state[i][0]) 
-                * (point.latitude - state[i][1]) / (state[j][1] - state[i][1]) + state[i][0]) {
-                    isInside = true;
-                }
+            if ( (state[i][1] > point.latitude) != (state[j][1] > point.latitude) && point.longitude < (state[j][0] - state[i][0]) * (point.latitude - state[i][1]) / (state[j][1] - state[i][1]) + state[i][0]) {
+                isInside = true;
+            }
         }
     }
     return isInside;

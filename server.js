@@ -1,14 +1,19 @@
 "use strict";
 
 var express = require('express');
-var _ = require('lodash');
+var bodyParser = require('body-parser');
+
 var statePoller = require('./statepoller');
 var stateFinder = require('./stateFinder');
 
 var app = express();
 var port = process.env.PORT || 8080;
 
-app.get('/', function(request, response) {
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+app.post('/', function(request, response) {
+  var stateIndex;
   var pointInsideState = false;
   var point = request.query;
   var states = statePoller.pollStates();
@@ -18,14 +23,19 @@ app.get('/', function(request, response) {
     pointInsideState = stateFinder.pointInState(point, borders[index]);
 
     if (pointInsideState === true) {
-      console.log('[' + JSON.stringify(statePoller.pollStates()[index]) + ']');
+      stateIndex = index;
       break;
     } 
   }
 
-  // response.send("longitude: " + point.longitude + ' ' + "latitude: " + point.latitude);
+  if (pointInsideState === true){
+    console.log('[' + JSON.stringify(statePoller.pollStates()[stateIndex]) + ']');
+  }else {
+    console.log("You are in nowhere land.");
+  } 
+
+  //response.send("longitude: " + point.longitude + ' ' + "latitude: " + point.latitude);
 });
 
 // start the server
-app.listen(port);
-console.log('[1] 21507');
+app.listen(port); 
