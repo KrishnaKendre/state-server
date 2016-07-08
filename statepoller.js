@@ -6,19 +6,19 @@ var json = require('./public/states.json');
 
 function pollStates() {
     var states = []
-    
+
     states = _.map(json, 'state');
-    
-    return states;        
+
+    return states;
 };
 
 function pollStateBorders(params) {
     var borders = []
 
-    borders = _.map(json, 'border')
+    borders = _.map(json, 'border');
 
-    return borders
+    return borders;
 }
 
 exports.pollStates = pollStates;
-exports.pollStateBorders = pollStateBorders; 
+exports.pollStateBorders = pollStateBorders;

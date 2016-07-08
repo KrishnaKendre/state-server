@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.post('/', function(request, response) {
   var stateIndex;
   var pointInsideState = false;
-  var point = request.query;
+  var point = request.body;
   var states = statePoller.pollStates();
   var borders = statePoller.pollStateBorders();
 
@@ -29,12 +29,10 @@ app.post('/', function(request, response) {
   }
 
   if (pointInsideState === true){
-    console.log('[' + JSON.stringify(statePoller.pollStates()[stateIndex]) + ']');
+    response.send('[' + JSON.stringify(statePoller.pollStates()[stateIndex]) + ']');
   }else {
-    console.log("You are in nowhere land.");
+    response.send("You are not located in the United States!");
   } 
-
-  //response.send("longitude: " + point.longitude + ' ' + "latitude: " + point.latitude);
 });
 
 // start the server
